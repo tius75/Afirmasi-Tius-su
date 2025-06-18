@@ -1,0 +1,1 @@
+# Afirmasi-Tius-su
