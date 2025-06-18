@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afirmasi & Meditasi Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #4CAF50;
+            font-size: 2.5em;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .card-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card-actions button,
+        .card-actions a {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .card-actions button:hover,
+        .card-actions a:hover {
+            background-color: #45a049;
+        }
+
+        .card-actions i {
+            margin-right: 5px;
+        }
+
+        .control-panel {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-panel h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #4CAF50;
+            margin-top: 0;
+        }
+
+        .control-panel select,
+        .control-panel button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .control-panel button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .control-panel button:hover {
+            background-color: #1e88e5;
+        }
+
+        /* Manual Input Section */
+        .manual-input-section {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .manual-input-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #FF9800;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        #manualAffirmationInput {
+            width: calc(100% - 22px); /* Account for padding and border */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            min-height: 120px;
+            margin-bottom: 15px;
+            outline: none;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .editor-toolbar select,
+        .editor-toolbar input[type="color"],
+        .editor-toolbar input[type="number"],
+        .editor-toolbar button {
+            padding: 5px 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .editor-toolbar button {
+            background-color: #607D8B;
+            color: white;
+            border: none;
+        }
+        .editor-toolbar button:hover {
+            background-color: #455A64;
+        }
+
+        .text-position-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+
+        .text-position-controls button {
+            background-color: #795548;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .text-position-controls button:hover {
+            background-color: #5D4037;
+        }
+
+        .preview-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            width: 100%; /* Ensure it takes full width of its parent */
+            max-width: 600px; /* Limit max width for a consistent card-like appearance */
+            height: 400px; /* Fixed height for consistent image capture */
+            margin: 20px auto; /* Center the preview card */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed #ccc; /* Visual cue for the preview area */
+        }
+
+        .preview-card .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.7); /* Make text more readable */
+        }
+
+        .editable-text-overlay {
+            position: absolute; /* Changed to absolute for precise positioning */
+            z-index: 2;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background for readability */
+            border-radius: 5px;
+            max-width: 90%;
+            word-wrap: break-word; /* Ensure long words wrap */
+            transition: all 0.2s ease; /* Smooth transition for positioning */
+        }
+
+        #previewText {
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            font-weight: normal; /* Reset for general text */
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .card-actions {
+                flex-direction: column;
+            }
+            .editor-toolbar {
+                justify-content: center;
+            }
+        }
+
+        /* --- Styles for the temporary card used for download (NEW STRUCTURE) --- */
+        .download-container {
+            width: 800px; /* Target width for the final image */
+            background-color: white; /* Ensure white background for the whole image */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+            z-index: -1 !important;
+            box-shadow: none !important;
+            border-radius: 10px; /* Apply overall border-radius */
+            overflow: hidden; /* Ensure rounded corners are applied */
+        }
+
+        .download-image-section {
+            width: 100%;
+            height: 600px; /* Fixed height for the image part */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7); /* Consistent with preview */
+        }
+
+        .download-text-overlay { /* For custom text on image */
+            position: absolute;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        .download-text-section {
+            width: 100%;
+            background-color: white; /* Explicitly white background */
+            padding: 30px 40px; /* Larger padding for the text section */
+            box-sizing: border-box;
+            text-align: center;
+            border-top: 1px solid #eee; /* Separator line */
+        }
+
+        .download-text-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            font-size: 2.5em; /* Larger font size for downloaded title */
+            margin-top: 0;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .download-text-section p {
+            font-size: 1.8em; /* Larger font size for downloaded description */
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* New Watermark Style for output JPG/Share */
+        .download-watermark {
+            position: absolute;
+            bottom: 15px; /* Sedikit jarak bawah dari batas bawah gambar */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3; /* Pastikan di atas overlay teks jika ada */
+            color: white; /* Warna putih solid agar lebih terlihat */
+            font-size: 1.1em; /* Ukuran font lebih besar */
+            font-weight: bolder; /* Lebih tebal */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9); /* Text shadow lebih kuat */
+            white-space: nowrap; /* Mencegah teks patah baris */
+        }
+
+        .download-footer {
+            width: 100%;
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        /* Loading indicator styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .loading-spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* CSS for the animations on previewText */
+        .fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .slideIn {
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .zoomIn {
+            animation: zoomIn 0.6s ease;
+        }
+
+        /* Footer for the main page */
+        .main-footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+            border-top: 1px solid #eee;
+            width: 100%;
+            max-width: 1200px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Afirmasi & Meditasi Online</h1>
+        <p>Temukan afirmasi positif dan panduan meditasi untuk meningkatkan kesejahteraan Anda.</p>
+    </div>
+
+    <div class="control-panel">
+        <h2>Pilih Kategori</h2>
+        <select id="categorySelect">
+            <option value="all">Semua Kategori</option>
+            <option value="meditasi">Teknik Meditasi</option>
+            <option value="umum">Afirmasi Umum</option>
+            <option value="kesehatan">Afirmasi Kesehatan</option>
+            <option value="uang">Afirmasi Uang</option>
+            <option value="kebahagiaan">Afirmasi Kebahagiaan</option>
+            <option value="spiritual">Afirmasi Spiritual</option>
+            <option value="sukses">Afirmasi Sukses</option>
+        </select>
+        <button id="generateRandom">Hasilkan Acak</button>
+    </div>
+
+    <div class="container" id="cardsContainer">
+        </div>
+
+    <div class="manual-input-section">
+        <h2>Buat Afirmasi Anda Sendiri</h2>
+        <div class="editor-toolbar">
+            <select id="fontFamily">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Open Sans', sans-serif">Open Sans</option>
+            </select>
+            <input type="color" id="fontColor" value="#ffffff">
+            <input type="number" id="fontSize" value="24" min="10" max="72">
+            <button onclick="applyStyle('bold')"><i class="fas fa-bold"></i></button>
+            <button onclick="applyStyle('italic')"><i class="fas fa-italic"></i></button>
+            <button onclick="applyStyle('underline')"><i class="fas fa-underline"></i></button>
+            <button onclick="applyAnimation('fadeIn')">Fade In</button>
+            <button onclick="applyAnimation('slideIn')">Slide In</button>
+            <button onclick="applyAnimation('zoomIn')">Zoom In</button>
+        </div>
+        <textarea id="manualAffirmationInput" rows="5" placeholder="Ketik afirmasi Anda di sini..."></textarea>
+        <button id="getOnlineAffirmationBtn" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Dapatkan Afirmasi Online</button>
+
+        <div class="text-position-controls">
+            <button onclick="setTextPosition('top-left')">Kiri Atas</button>
+            <button onclick="setTextPosition('top-center')">Tengah Atas</button>
+            <button onclick="setTextPosition('top-right')">Kanan Atas</button>
+            <button onclick="setTextPosition('center-left')">Kiri Tengah</button>
+            <button onclick="setTextPosition('center')">Tengah</button>
+            <button onclick="setTextPosition('center-right')">Kanan Tengah</button>
+            <button onclick="setTextPosition('bottom-left')">Kiri Bawah</button>
+            <button onclick="setTextPosition('bottom-center')">Tengah Bawah</button>
+            <button onclick="setTextPosition('bottom-right')">Kanan Bawah</button>
+        </div>
+        <button id="createCustomCardBtn">Perbarui Pratinjau Kartu</button>
+        <div style="margin-top: 15px; text-align: center;">
+            <label for="customImageURL">URL Gambar Latar Belakang Kustom (Opsional):</label>
+            <input type="text" id="customImageURL" placeholder="https://picsum.photos/800/600" style="width: calc(100% - 20px); padding: 8px; border-radius: 5px; border: 1px solid #ddd; margin-top: 5px;">
+            <button onclick="updateCustomImage()" style="margin-top: 10px;">Ganti Gambar Latar</button>
+        </div>
+
+
+        <h3>Pratinjau Kartu Kustom</h3>
+        <div class="preview-card" id="customCardPreview">
+            <img src="" alt="Gambar Latar Belakang" class="card-image" crossOrigin="anonymous">
+            <div class="editable-text-overlay" id="editableTextOverlay">
+                <p id="previewText"></p>
+            </div>
+        </div>
+        <div class="card-actions" style="margin-top: 20px;">
+            <button onclick="downloadCustomCard()" id="downloadCustomCardBtn"><i class="fas fa-download"></i> Unduh JPG</button>
+            <button onclick="shareCustomCardSocial()" id="shareCustomCardSocialBtn"><i class="fas fa-share-alt"></i> Bagikan Sosial Media</button>
+        </div>
+    </div>
+    
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Membuat gambar...</p>
+        <p>Ini mungkin membutuhkan waktu beberapa detik.</p>
+    </div>
+
+    <footer class="main-footer">
+        <p>Created by Tius</p>
+        <p>&copy; 2025 Afirmasi & Meditasi Online. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Array untuk sumber gambar online yang berbeda - Diubah ke PicSum
+        const imageUrlSources = [
+            'https://picsum.photos/seed/random1/800/600',
+            'https://picsum.photos/seed/random2/800/600',
+            'https://picsum.photos/seed/random3/800/600',
+            'https://picsum.photos/seed/random4/800/600',
+            'https://picsum.photos/seed/random5/800/600',
+        ];
+        
+        // URL API untuk afirmasi online kustom.
+        // PENTING: Saya menggunakan type.fit/api/quotes sebagai contoh karena tidak memerlukan API key.
+        // Ini akan mengembalikan KUTIPAN UMUM, bukan afirmasi spesifik.
+        // Untuk afirmasi yang lebih relevan, Anda mungkin perlu mencari API lain (misal: "free affirmation API")
+        // atau membangun API sederhana Anda sendiri.
+        const ONLINE_AFFIRMATION_API_URL = 'https://type.fit/api/quotes'; 
+
+        const affirmations = {
+            meditasi: [
+                {
+                    title: "Meditasi Pernapasan Kesadaran (Mindful Breathing)",
+                    description: "Meditasi pernapasan kesadaran melibatkan perhatian penuh pada sensasi napas saat udara masuk dan keluar dari tubuh Anda. Ini adalah jangkar yang kuat untuk membawa pikiran kembali ke momen kini. Dengan fokus pada ritme alami napas, Anda belajar untuk mengamati pikiran dan perasaan tanpa menghakiminya, membiarkannya datang dan dan pergi seperti awan di langit. Latihan teratur dari teknik ini dapat secara signifikan mengurangi tingkat stres, meningkatkan fokus, menenangkan sistem saraf, dan membawa rasa damai batin yang mendalam. Ini adalah fondasi bagi banyak praktik meditasi lainnya dan dapat dilakukan di mana saja, kapan saja.",
+                    image: null // Akan diisi acak
+                },
+                {
+                    title: "Meditasi Pindai Tubuh (Body Scan Meditation)",
+                    description: "Dalam meditasi pindai tubuh, Anda secara bertahap mengalihkan perhatian Anda ke setiap bagian tubuh, dari ujung kepala hingga ujung kaki. Tujuannya adalah untuk merasakan sensasi apa pun yang muncul — apakah itu ketegangan, relaksasi, geli, atau mati rasa — tanpa mencoba mengubahnya atau menghakiminya. Ini membantu Anda menjadi lebih sadar akan hubungan antara pikiran dan tubuh, melepaskan ketegangan yang mungkin tidak Anda sadari, dan meningkatkan kesadaran kinestetik. Praktik ini sangat efektif untuk relaksasi mendalam, mengurangi rasa sakit kronis, dan mengembangkan hubungan yang lebih sehat dengan tubuh Anda.",
+                    image: null
+                },
+                {
+                    title: "Meditasi Cinta Kasih (Metta Meditation)",
+                    description: "Meditasi Metta, atau meditasi cinta kasih, adalah praktik untuk mengembangkan perasaan kebaikan, kasih sayang, dan niat baik terhadap diri sendiri dan semua makhluk hidup. Anda memulai dengan diri sendiri, mengucapkan afirmasi seperti 'Semoga saya berbahagia, semoga saya sehat, semoga saya damai.' Kemudian, Anda memperluas perasaan ini kepada orang-orang yang Anda cintai, teman, kenalan, bahkan orang-orang yang sulit, dan akhirnya kepada seluruh alam semesta. Praktik ini secara aktif membangun empati, mengurangi permusuhan, meningkatkan hubungan, dan memupuk rasa koneksi universal. Ini adalah cara yang kuat untuk membuka hati dan melepaskan emosi negatif.",
+                    image: null
+                },
+                {
+                    title: "Meditasi Berjalan (Walking Meditation)",
+                    description: "Meditasi berjalan adalah cara untuk membawa kesadaran penuh ke dalam aktivitas fisik. Alih-alih duduk diam, Anda fokus pada sensasi setiap langkah: sentuhan kaki Anda dengan tanah, gerakan otot, ayunan lengan, dan keseimbangan tubuh. Ini adalah praktik yang sangat baik bagi mereka yang merasa gelisah saat duduk diam, atau bagi mereka yang ingin mengintegrasikan meditasi ke dalam kehidupan sehari-hari. Meditasi berjalan dapat meningkatkan kesadaran sensorik, membantu membumi, mengurangi pikiran berulang, dan memberikan cara baru untuk mengalami dunia di sekitar Anda dengan perhatian penuh.",
+                    image: null
+                },
+                {
+                    title: "Meditasi Visualisasi",
+                    description: "Meditasi visualisasi melibatkan pembentukan gambaran mental yang jelas tentang suatu tempat, situasi, atau hasil yang diinginkan. Anda mungkin membayangkan diri Anda di pantai yang tenang, mencapai tujuan tertentu, atau memancarkan cahaya penyembuhan. Dengan melibatkan indra Anda dalam visualisasi, Anda dapat menciptakan pengalaman yang kuat yang menenangkan pikiran, mengurangi stres, mempromosikan penyembuhan, dan membantu Anda memanifestasikan tujuan. Ini adalah alat yang ampuh untuk relaksasi, mengatasi ketakutan, dan membangun kepercayaan diri.",
+                    image: null
+                }
+            ],
+            umum: [
+                {
+                    title: "Afirmasi Umum: Saya Mampu dan Berdaya",
+                    description: "Saya percaya sepenuhnya pada diri sendiri dan pada kekuatan yang ada di dalam diri saya untuk mengatasi setiap tantangan yang datang. Setiap rintangan adalah kesempatan untuk tumbuh, dan saya memiliki semua sumber daya internal yang diperlukan untuk mencapai setiap tujuan yang saya tetapkan. Saya berdaya untuk menciptakan realitas yang saya inginkan dan saya mampu meraih kesuksesan dalam setiap aspek kehidupan saya, dengan dedikasi, ketekunan, dan keyakinan diri yang tak tergoyahkan.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Umum: Hari Ini Adalah Hari Baik yang Penuh Berkah",
+                    description: "Saya bangun setiap pagi dengan rasa syukur yang mendalam, mengetahui bahwa hari ini adalah kanvas baru yang siap untuk dilukis dengan kebahagiaan dan peluang. Setiap momen adalah kesempatan untuk pertumbuhan, pembelajaran, dan menciptakan pengalaman positif. Saya memilih untuk melihat keindahan dalam hal-hal kecil, dan saya membuka diri untuk menerima semua kebaikan dan berkat yang disiapkan alam semesta untuk saya. Saya memancarkan energi positif dan menarik hal-hal baik ke dalam hidup saya.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Umum: Saya Bersyukur atas Semua Berkah",
+                    description: "Hati saya dipenuhi dengan rasa syukur yang melimpah atas semua berkat yang telah saya terima dan yang akan datang. Saya menghargai setiap pengalaman, baik yang menyenangkan maupun yang menantang, karena saya tahu setiap pengalaman membawa pelajaran berharga yang membentuk siapa saya. Saya fokus pada kelimpahan dalam hidup saya, mengakui kebaikan dalam orang-orang di sekitar saya, kesehatan saya, dan kesempatan yang saya miliki. Sikap syukur ini membuka pintu bagi lebih banyak kebaikan untuk mengalir ke dalam hidup saya.",
+                    image: null
+                }
+            ],
+            kesehatan: [
+                {
+                    title: "Afirmasi Kesehatan: Tubuh Saya Kuat dan Sembuh",
+                    description: "Setiap sel dalam tubuh saya berfungsi dengan sempurna untuk mendukung kesehatan dan vitalitas optimal saya. Saya mendengarkan sinyal tubuh saya, memberinya nutrisi yang tepat, istirahat yang cukup, dan aktivitas fisik yang menyenangkan. Tubuh saya adalah kuil yang kuat dan tangguh, dan saya menghargai serta merawatnya dengan penuh cinta dan perhatian. Saya menyembuh dengan cepat dari segala kondisi dan saya semakin kuat dan sehat setiap hari.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Kesehatan: Saya Memilih Gaya Hidup Sehat",
+                    description: "Saya memiliki kendali penuh atas pilihan-pilihan yang saya buat setiap hari, dan saya memilih untuk hidup sehat dan penuh energi. Saya menikmati makanan yang menyehatkan, berolahraga secara teratur, dan memberi diri saya waktu untuk beristirahat dan memulihkan diri. Setiap pilihan yang saya buat adalah langkah menuju kesejahteraan fisik, mental, dan emosional yang lebih baik. Saya mencintai dan menghormati tubuh saya dengan setiap tindakan yang saya ambil.",
+                    image: null
+                }
+            ],
+            uang: [
+                {
+                    title: "Afirmasi Uang: Saya Menarik Kemakmuran dan Kelimpahan",
+                    description: "Pikiran saya selaras dengan energi kelimpahan, dan saya adalah magnet yang menarik uang, kekayaan, dan kemakmuran dalam segala bentuk. Uang mengalir kepada saya dengan mudah, melimpah, dan dari berbagai sumber. Saya adalah pengelola keuangan yang bijak, dan saya menggunakan kekayaan saya untuk kebaikan diri sendiri, keluarga saya, dan dunia. Saya pantas mendapatkan kelimpahan finansial dan saya bersyukur atas kekayaan yang terus bertambah dalam hidup saya.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Uang: Saya Layak Menerima Kekayaan",
+                    description: "Saya melepaskan semua keyakinan negatif tentang uang dan membuka diri untuk menerima kelimpahan tanpa batas dari alam semesta. Saya pantas mendapatkan kekayaan, kesuksesan, dan semua hal baik yang ditawarkan kehidupan. Saya memiliki kemampuan untuk menciptakan nilai, dan saya dengan senang hati menerima imbalan atas pekerjaan dan kontribusi saya. Setiap hari, saya menarik peluang baru untuk meningkatkan pendapatan dan keamanan finansial saya.",
+                    image: null
+                }
+            ],
+            kebahagiaan: [
+                {
+                    title: "Afirmasi Kebahagiaan: Saya Memilih Kebahagiaan Setiap Hari",
+                    description: "Kebahagiaan adalah pilihan yang saya buat setiap momen. Saya memilih untuk melihat sisi positif dalam setiap situasi dan menemukan kegembiraan dalam hal-hal kecil yang sering terabaikan. Hati saya dipenuhi dengan sukacita dan tawa, dan saya memancarkan energi positif ini kepada semua orang di sekitar saya. Saya menciptakan lingkungan yang penuh dengan kebahagiaan dan cinta, dan saya mengizinkan diri saya untuk sepenuhnya merasakan kegembiraan hidup.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Kebahagiaan: Saya Penuh Kegembiraan dan Kedamaian",
+                    description: "Jiwa saya bernyanyi dengan kegembiraan, dan pikiran saya dipenuhi dengan kedamaian. Saya melepaskan kekhawatiran dan memeluk momen kini dengan hati yang terbuka. Saya adalah sumber kebahagiaan saya sendiri, dan saya tidak bergantung pada orang lain atau keadaan eksternal untuk merasa bahagia. Saya menemukan sukacita dalam diri saya, dalam hubungan saya, dan dalam keindahan dunia di sekitar saya.",
+                    image: null
+                }
+            ],
+            spiritual: [
+                {
+                    title: "Afirmasi Spiritual: Saya Terhubung dengan Sumber Ilahi",
+                    description: "Saya menyadari bahwa saya adalah bagian tak terpisahkan dari alam semesta yang luas dan terhubung dengan energi ilahi yang mengalir melalui segala sesuatu. Saya percaya pada bimbingan dari kekuatan yang lebih tinggi dan saya membuka diri untuk menerima kebijaksanaan dan wawasan yang datang dari dalam. Saya merasakan kedamaian dan ketenangan dalam kesadaran ini, dan saya menjalani hidup dengan tujuan dan makna yang lebih besar.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Spiritual: Saya Adalah Makhluk Ilahi yang Damai",
+                    description: "Jiwa saya menemukan kedamaian yang mendalam dan ketenangan yang abadi. Saya melepaskan semua kekhawatiran dan ketakutan, mengetahui bahwa saya dilindungi dan dibimbing oleh energi spiritual yang tak terbatas. Saya memancarkan cinta, cahaya, dan kedamaian kepada dunia, dan saya menerima kembali energi positif ini secara berlimpah. Saya adalah refleksi dari kebaikan ilahi dan saya hidup dalam harmoni dengan alam semesta.",
+                    image: null
+                }
+            ],
+            sukses: [
+                {
+                    title: "Afirmasi Sukses: Saya Meraih Kesuksesan Tanpa Batas",
+                    description: "Setiap langkah yang saya ambil adalah langkah yang disengaja menuju kesuksesan yang luar biasa. Saya adalah pribadi yang bertekad, fokus, dan gigih, dan saya tidak akan menyerah sampai tujuan saya tercapai. Saya melihat setiap tantangan sebagai kesempatan untuk tumbuh dan belajar, dan saya merayakan setiap kemenangan, besar maupun kecil. Saya menciptakan jalur saya sendiri menuju kesuksesan, dan saya pantas mendapatkan semua kelimpahan yang datang dengan itu.",
+                    image: null
+                },
+                {
+                    title: "Afirmasi Sukses: Saya Produktif dan Berhasil",
+                    description: "Saya menggunakan waktu dan energi saya dengan bijak dan efisien, fokus pada tugas-tugas yang paling penting untuk mencapai tujuan saya. Saya produktif dan termotivasi, menyelesaikan pekerjaan dengan kualitas tinggi dan mencapai hasil yang luar biasa. Saya merayakan kemampuan saya untuk bekerja dengan cerdas dan efektif, dan saya terbuka untuk menerima pengakuan dan imbalan atas usaha saya. Setiap hari adalah kesempatan baru untuk mencapai lebih banyak dan menjadi versi terbaik dari diri saya.",
+                    image: null
+                }
+            ]
+        };
+
+        const cardsContainer = document.getElementById('cardsContainer');
+        const categorySelect = document.getElementById('categorySelect');
+        const generateRandomBtn = document.getElementById('generateRandom');
+        const manualAffirmationInput = document.getElementById('manualAffirmationInput');
+        const customCardPreview = document.getElementById('customCardPreview');
+        const previewText = document.getElementById('previewText');
+        const fontFamilySelect = document.getElementById('fontFamily');
+        const fontColorInput = document.getElementById('fontColor');
+        const fontSizeInput = document.getElementById('fontSize');
+        const editableTextOverlay = document.getElementById('editableTextOverlay');
+        const createCustomCardBtn = document.getElementById('createCustomCardBtn');
+        const customImageURLInput = document.getElementById('customImageURL');
+        const previewImage = customCardPreview.querySelector('.card-image');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const getOnlineAffirmationBtn = document.getElementById('getOnlineAffirmationBtn');
+
+
+        let currentCategory = 'all';
+        // Assign a random image URL to the initial custom card preview
+        previewImage.src = getRandomImageUrl();
+        let currentCustomImageUrl = previewImage.src; 
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function getRandomImageUrl() {
+            // Menggunakan PicSum dengan ID gambar acak untuk variasi yang lebih baik
+            // Ada sekitar 1084 gambar di picsum.photos, jadi id sampai 1000 cukup aman
+            const randomId = Math.floor(Math.random() * 1084); 
+            const randomWidth = 800;
+            const randomHeight = 600;
+            return `https://picsum.photos/id/${randomId}/${randomWidth}/${randomHeight}`;
+        }
+
+        function createCard(item) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const img = document.createElement('img');
+            img.classList.add('card-image');
+            img.src = item.image || getRandomImageUrl(); // Use random image if not specified
+            img.alt = item.title;
+            img.crossOrigin = "anonymous"; // Essential for CORS on the image itself
+
+            const content = document.createElement('div');
+            content.classList.add('card-content');
+            const h3 = document.createElement('h3');
+            h3.textContent = item.title;
+            const p = document.createElement('p');
+            p.textContent = item.description;
+
+            content.appendChild(h3);
+            content.appendChild(p);
+
+            const actions = document.createElement('div');
+            actions.classList.add('card-actions');
+
+            // Unduh JPG
+            const downloadBtn = document.createElement('button');
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Unduh JPG';
+            downloadBtn.onclick = () => downloadGeneratedCardAsImage(item.title, item.description, img.src);
+
+            // Share Sosial Media
+            const socialShareBtn = document.createElement('button');
+            socialShareBtn.innerHTML = '<i class="fas fa-share-alt"></i> Bagikan Sosial Media';
+            socialShareBtn.onclick = () => shareCardOnSocialMedia(item.title, item.description, img.src);
+
+            actions.appendChild(downloadBtn);
+            actions.appendChild(socialShareBtn);
+
+            card.appendChild(img);
+            card.appendChild(content);
+            card.appendChild(actions);
+
+            return card;
+        }
+
+        function displayCards(category) {
+            cardsContainer.innerHTML = '';
+            let itemsToDisplay = [];
+
+            if (category === 'all') {
+                for (const key in affirmations) {
+                    itemsToDisplay = itemsToDisplay.concat(affirmations[key]);
+                }
+            } else {
+                itemsToDisplay = affirmations[category] || [];
+            }
+
+            itemsToDisplay.sort(() => 0.5 - Math.random()); // Shuffle
+            const cardsToShow = itemsToDisplay.slice(0, 6); // Display a limited number
+
+            cardsToShow.forEach(item => {
+                cardsContainer.appendChild(createCard(item));
+            });
+        }
+
+        function generateRandomCard() {
+            let allItems = [];
+            for (const key in affirmations) {
+                allItems = allItems.concat(affirmations[key]);
+            }
+            const randomIndex = getRandomInt(allItems.length);
+            const randomItem = allItems[randomIndex];
+
+            cardsContainer.innerHTML = '';
+            cardsContainer.appendChild(createCard(randomItem));
+        }
+
+        // Initial load
+        displayCards(currentCategory);
+
+        categorySelect.addEventListener('change', (event) => {
+            currentCategory = event.target.value;
+            displayCards(currentCategory);
+        });
+
+        generateRandomBtn.addEventListener('click', generateRandomCard);
+
+
+        // --- Manual Input Section Logic ---
+
+        manualAffirmationInput.addEventListener('input', updatePreview);
+        fontFamilySelect.addEventListener('change', updatePreview);
+        fontColorInput.addEventListener('input', updatePreview);
+        fontSizeInput.addEventListener('input', updatePreview);
+        getOnlineAffirmationBtn.addEventListener('click', getOnlineAffirmation);
+
+        function updatePreview() {
+            const text = manualAffirmationInput.value;
+            previewText.textContent = text;
+            applyStylesToPreview();
+        }
+
+        function applyStylesToPreview() {
+            const selectedFont = fontFamilySelect.value;
+            const selectedColor = fontColorInput.value;
+            const selectedSize = fontSizeInput.value + 'px';
+
+            previewText.style.fontFamily = selectedFont;
+            previewText.style.color = selectedColor;
+            previewText.style.fontSize = selectedSize;
+
+            previewText.style.fontWeight = ''; // Reset
+            previewText.style.fontStyle = ''; // Reset
+            previewText.style.textDecoration = ''; // Reset
+            previewText.style.animation = ''; // Clear previous animations
+            previewText.classList.remove('fadeIn', 'slideIn', 'zoomIn'); // Remove animation classes
+        }
+
+        // For bold, italic, underline - modify the previewText style directly
+        function applyStyle(command) {
+            if (command === 'bold') {
+                previewText.style.fontWeight = previewText.style.fontWeight === 'bold' ? 'normal' : 'bold';
+            } else if (command === 'italic') {
+                previewText.style.fontStyle = previewText.style.fontStyle === 'italic' ? 'normal' : 'italic';
+            } else if (command === 'underline') {
+                previewText.style.textDecoration = previewText.style.textDecoration === 'underline' ? 'none' : 'underline';
+            }
+        }
+
+        let currentAnimation = '';
+        function applyAnimation(animationType) {
+            previewText.classList.remove('fadeIn', 'slideIn', 'zoomIn'); // Remove all current animations
+
+            if (currentAnimation === animationType) {
+                currentAnimation = ''; // Toggle off if same animation clicked again
+            } else {
+                currentAnimation = animationType;
+                previewText.classList.add(animationType);
+            }
+        }
+
+        // Keyframes for animations (ensure they are in your CSS or dynamically added)
+        const styleSheet = document.styleSheets[0];
+        const addAnimationRule = (name, keyframes) => {
+            try {
+                // Check if the rule already exists to prevent duplicates
+                let ruleExists = false;
+                for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                    // Check rule.name for @keyframes rules
+                    if (styleSheet.cssRules[i].type === CSSRule.KEYFRAMES_RULE && styleSheet.cssRules[i].name === name) {
+                        ruleExists = true;
+                        break;
+                    }
+                }
+                if (!ruleExists) {
+                    styleSheet.insertRule(`@keyframes ${name} { ${keyframes} }`, styleSheet.cssRules.length);
+                }
+            } catch (e) {
+                console.warn(`Could not add keyframes for ${name}:`, e.message);
+            }
+        };
+
+        addAnimationRule('fadeIn', 'from { opacity: 0; } to { opacity: 1; }');
+        addAnimationRule('slideIn', 'from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }');
+        addAnimationRule('zoomIn', 'from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; }');
+
+
+        function setTextPosition(position) {
+            editableTextOverlay.style.top = '';
+            editableTextOverlay.style.bottom = '';
+            editableTextOverlay.style.left = '';
+            editableTextOverlay.style.right = '';
+            editableTextOverlay.style.transform = '';
+
+            switch (position) {
+                case 'top-left':
+                    editableTextOverlay.style.top = '10px';
+                    editableTextOverlay.style.left = '10px';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'left';
+                    break;
+                case 'top-center':
+                    editableTextOverlay.style.top = '10px';
+                    editableTextOverlay.style.left = '50%';
+                    editableTextOverlay.style.transform = 'translateX(-50%)';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'center';
+                    break;
+                case 'top-right':
+                    editableTextOverlay.style.top = '10px';
+                    editableTextOverlay.style.right = '10px';
+                    editableTextOverlay.style.left = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'right';
+                    break;
+                case 'center-left':
+                    editableTextOverlay.style.top = '50%';
+                    editableTextOverlay.style.left = '10px';
+                    editableTextOverlay.style.transform = 'translateY(-50%)';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'left';
+                    break;
+                case 'center':
+                    editableTextOverlay.style.top = '50%';
+                    editableTextOverlay.style.left = '50%';
+                    editableTextOverlay.style.transform = 'translate(-50%, -50%)';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'center';
+                    break;
+                case 'center-right':
+                    editableTextOverlay.style.top = '50%';
+                    editableTextOverlay.style.right = '10px';
+                    editableTextOverlay.style.transform = 'translateY(-50%)';
+                    editableTextOverlay.style.left = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'right';
+                    break;
+                case 'bottom-left':
+                    editableTextOverlay.style.bottom = '10px';
+                    editableTextOverlay.style.left = '10px';
+                    editableTextOverlay.style.top = 'auto';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'left';
+                    break;
+                case 'bottom-center':
+                    editableTextOverlay.style.bottom = '10px';
+                    editableTextOverlay.style.left = '50%';
+                    editableTextOverlay.style.transform = 'translateX(-50%)';
+                    editableTextOverlay.style.top = 'auto';
+                    editableTextOverlay.style.right = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'center';
+                    break;
+                case 'bottom-right':
+                    editableTextOverlay.style.bottom = '10px';
+                    editableTextOverlay.style.right = '10px';
+                    editableTextOverlay.style.top = 'auto';
+                    editableTextOverlay.style.left = 'auto';
+                    editableTextOverlay.style.width = 'auto';
+                    editableTextOverlay.style.textAlign = 'right';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function updateCustomImage() {
+            const url = customImageURLInput.value.trim(); // Trim whitespace
+            if (url) {
+                // Validate URL (simple check)
+                try {
+                    new URL(url); // Check if it's a valid URL format
+                    previewImage.src = url;
+                    currentCustomImageUrl = url;
+                } catch (e) {
+                    alert('URL gambar tidak valid. Pastikan formatnya benar (misal: https://example.com/image.jpg)');
+                    customImageURLInput.value = currentCustomImageUrl; // Revert to current
+                }
+            } else {
+                previewImage.src = getRandomImageUrl(); // Use random if input is empty
+                currentCustomImageUrl = previewImage.src;
+            }
+            previewImage.crossOrigin = "anonymous"; // Ensure crossOrigin for custom images too
+        }
+
+        /**
+         * Fetches an affirmation from an external online API.
+         * You MUST replace `ONLINE_AFFIRMATION_API_URL` with a real working API.
+         * The API should return a simple text affirmation in its response.
+         * For example: `{"affirmation": "I am worthy of all good things."}`
+         */
+        async function getOnlineAffirmation() {
+            showLoadingOverlay("Mencari afirmasi online...");
+            try {
+                // Menggunakan type.fit/api/quotes sebagai contoh.
+                // Ini akan mengembalikan array objek kutipan seperti:
+                // [{"text": "Quote text", "author": "Author Name"}, ...]
+                const response = await fetch(ONLINE_AFFIRMATION_API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                let affirmationText = "Maaf, afirmasi tidak ditemukan.";
+
+                if (Array.isArray(data) && data.length > 0) {
+                    // Pilih kutipan acak dari array
+                    const randomIndex = Math.floor(Math.random() * data.length);
+                    affirmationText = data[randomIndex].text || "Tidak ada teks afirmasi.";
+                    if (data[randomIndex].author && data[randomIndex].author !== "type.fit") {
+                        affirmationText += ` - ${data[randomIndex].author}`;
+                    }
+                } else if (data.affirmation) {
+                    affirmationText = data.affirmation;
+                } else if (data.quote) {
+                    affirmationText = data.quote;
+                } else if (typeof data === 'string') {
+                    affirmationText = data;
+                } else {
+                    console.warn("API response format not recognized:", data);
+                    affirmationText = "Afirmasi online tidak dapat diproses. Coba lagi.";
+                }
+
+                manualAffirmationInput.value = affirmationText;
+                updatePreview();
+            } catch (error) {
+                console.error('Error fetching online affirmation:', error);
+                alert('Gagal mendapatkan afirmasi online. Pastikan Anda terhubung ke internet dan URL API sudah benar. Periksa konsol browser (F12) untuk detail error.');
+                manualAffirmationInput.value = "Gagal mendapatkan afirmasi online. Coba lagi.";
+                updatePreview();
+            } finally {
+                hideLoadingOverlay();
+            }
+        }
+
+
+        /**
+         * Creates a temporary DOM element structured for image download.
+         * This element is hidden from view but can be rendered by html2canvas.
+         * @param {string} title - The title of the card.
+         * @param {string} description - The description/affirmation text.
+         * @param {string} imageUrl - The URL of the background image.
+         * @param {boolean} isCustom - True if it's a custom card, false for generated cards.
+         * @returns {HTMLElement} The created temporary element.
+         */
+        async function createDownloadableElement(title, description, imageUrl, isCustom) {
+            const tempDiv = document.createElement('div');
+            tempDiv.classList.add('download-container');
+            tempDiv.style.width = '800px'; 
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px'; 
+            tempDiv.style.top = '-9999px';
+            tempDiv.style.display = 'block'; 
+
+            // Image section
+            const imageSection = document.createElement('div');
+            imageSection.classList.add('download-image-section');
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.crossOrigin = "anonymous"; 
+            imageSection.appendChild(img);
+            
+            // Wait for image to load to ensure html2canvas captures it
+            // This is crucial for cross-origin images
+            if (!img.complete || img.naturalWidth === 0) {
+                await new Promise((resolve) => {
+                    img.onload = resolve;
+                    img.onerror = (e) => {
+                        console.error(`[DOWNLOAD ELEMENT] Image failed to load for download element: ${imageUrl}`, e);
+                        resolve(); // Resolve anyway to allow html2canvas to proceed, even if image is broken
+                    };
+                });
+            }
+
+            tempDiv.appendChild(imageSection);
+
+            if (isCustom) {
+                // For custom cards, clone the editable text overlay
+                const clonedOverlay = editableTextOverlay.cloneNode(true);
+                // Apply current styles from previewText
+                clonedOverlay.style.cssText = editableTextOverlay.style.cssText;
+                clonedOverlay.querySelector('p').style.cssText = previewText.style.cssText;
+                clonedOverlay.querySelector('p').textContent = previewText.textContent; 
+                imageSection.appendChild(clonedOverlay); 
+            } 
+
+            // Add watermark for "Created by Tius"
+            const watermark = document.createElement('div');
+            watermark.classList.add('download-watermark');
+            watermark.textContent = 'Created by Tius';
+            imageSection.appendChild(watermark); // Add watermark to the image section
+
+            // Text section (only for pre-defined cards, not custom ones with overlay)
+            // If it's a custom card, the text is already in the overlay, so this section is for non-custom cards
+            if (!isCustom) {
+                const textSection = document.createElement('div');
+                textSection.classList.add('download-text-section');
+                const h3 = document.createElement('h3');
+                h3.textContent = title;
+                const p = document.createElement('p');
+                p.textContent = description;
+                textSection.appendChild(h3);
+                textSection.appendChild(p);
+                tempDiv.appendChild(textSection);
+            }
+
+
+            // Footer (optional, this footer is for the entire generated image, not the page footer)
+            const footer = document.createElement('div');
+            footer.classList.add('download-footer');
+            footer.textContent = "Afirmasi & Meditasi Online - Semoga Hari Anda Penuh Berkah";
+            tempDiv.appendChild(footer);
+
+            document.body.appendChild(tempDiv);
+            return tempDiv;
+        }
+
+
+        // --- Core html2canvas capture function ---
+        async function captureElementAsImage(elementToCapture, filename) {
+            console.log(`[CAPTURE START] Attempting to capture element for "${filename}".`);
+            showLoadingOverlay(); 
+
+            let cleanupFunction = null; 
+
+            try {
+                if (!elementToCapture.parentNode) {
+                    document.body.appendChild(elementToCapture);
+                    cleanupFunction = () => {
+                        if (elementToCapture.parentNode) {
+                            elementToCapture.parentNode.removeChild(elementToCapture);
+                            console.log(`[CLEANUP] Temporary element for "${filename}" removed.`);
+                        }
+                    };
+                }
+                
+                elementToCapture.style.display = 'block';
+
+                const images = elementToCapture.querySelectorAll('img');
+                console.log(`[IMAGES] Found ${images.length} images to wait for in "${filename}".`);
+                const imagePromises = Array.from(images).map(img => {
+                    img.crossOrigin = "anonymous"; 
+                    return new Promise((resolve) => {
+                        if (img.complete && img.naturalWidth > 0) {
+                            console.log(`[IMAGES] Image already loaded and verified: ${img.src} (${img.naturalWidth}x${img.naturalHeight})`);
+                            resolve();
+                        } else {
+                            const timeout = setTimeout(() => {
+                                console.warn(`[IMAGES WARN] Image load timeout for ${img.src}`);
+                                resolve(); 
+                            }, 5000); 
+
+                            img.onload = () => {
+                                clearTimeout(timeout);
+                                console.log(`[IMAGES] Image loaded: ${img.src} (${img.naturalWidth}x${img.naturalHeight})`);
+                                resolve();
+                            };
+                            img.onerror = (e) => {
+                                clearTimeout(timeout);
+                                console.error(`[IMAGES ERROR] Image failed to load (CORS?) or broken in "${filename}": ${img.src}`, e);
+                                resolve(); 
+                            };
+                            if (img.src && !img.complete) { 
+                                img.src = img.src; 
+                            }
+                        }
+                    });
+                });
+                await Promise.all(imagePromises);
+                console.log(`[IMAGES] All images in "${filename}" processed. Proceeding to render.`);
+
+
+                console.log(`[DELAY] Applying 300ms delay for "${filename}" rendering...`); 
+                await new Promise(resolve => setTimeout(resolve, 300)); 
+                console.log(`[DELAY] Delay finished for "${filename}". Attempting html2canvas...`);
+
+                const canvas = await html2canvas(elementToCapture, {
+                    useCORS: true,
+                    allowTaint: true, 
+                    backgroundColor: null,
+                    scale: 2, 
+                    logging: true, 
+                    width: 800, 
+                });
+                console.log(`[HTML2CANVAS] html2canvas finished for "${filename}".`);
+
+                const image = canvas.toDataURL('image/jpeg', 0.9);
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = `${filename.replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '') || 'affirmation-card'}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log(`[DOWNLOAD] Download for "${filename}" initiated successfully.`);
+            } catch (error) {
+                console.error(`[CAPTURE ERROR] Error generating image for "${filename}":`, error);
+                alert('Gagal mengunduh gambar. Ini mungkin masalah gambar (CORS/tidak termuat) atau lainnya. Pastikan gambar latar belakang terlihat jelas di layar dan periksa konsol browser (F12) untuk detail error.');
+            } finally {
+                if (cleanupFunction) {
+                    cleanupFunction();
+                }
+                hideLoadingOverlay(); 
+            }
+        }
+
+        // Function to create and download a generated card (from predefined affirmations)
+        async function downloadGeneratedCardAsImage(title, description, imageUrl) {
+            const downloadableElement = await createDownloadableElement(title, description, imageUrl, false);
+            await captureElementAsImage(downloadableElement, title);
+        }
+
+        // Function to download the custom card
+        async function downloadCustomCard() {
+            updatePreview(); 
+
+            const downloadableElement = await createDownloadableElement(
+                'Afirmasi Kustom Anda', 
+                manualAffirmationInput.value, 
+                previewImage.src, 
+                true 
+            );
+            await captureElementAsImage(downloadableElement, 'afirmasi-kustom');
+        }
+
+
+        // Share Social Media for generated cards
+        async function shareCardOnSocialMedia(title, description, imageUrl) {
+            console.log('[SHARE] Attempting to share on social media:', title);
+
+            const formattedDescription = description.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim(); 
+            const shareText = `Afirmasi / Meditasi:\n\n*${title}*\n\n${formattedDescription}\n\n#AfirmasiPositif #Meditasi`;
+
+            if (navigator.share) {
+                try {
+                    showLoadingOverlay("Mempersiapkan gambar untuk berbagi...");
+                    const downloadableElement = await createDownloadableElement(title, description, imageUrl, false); 
+                    const canvas = await html2canvas(downloadableElement, {
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: null,
+                        scale: 2,
+                        logging: true,
+                        width: 800,
+                    });
+                    const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+                    downloadableElement.parentNode.removeChild(downloadableElement); 
+                    hideLoadingOverlay();
+
+                    await navigator.share({
+                        title: title,
+                        text: shareText, 
+                        files: [new File([imageBlob], `${title.replace(/\s/g, '-')}.jpg`, { type: 'image/jpeg' })]
+                    });
+                    console.log('[SHARE] Shared successfully via Web Share API.');
+                } catch (error) {
+                    console.error('[SHARE ERROR] Error sharing via Web Share API:', error);
+                    alert('Gagal berbagi ke media sosial. Fitur ini mungkin tidak didukung di browser atau perangkat Anda. Coba lagi atau unduh gambar.');
+                    hideLoadingOverlay();
+                }
+            } else {
+                const encodedShareText = encodeURIComponent(shareText).replace(/%0A/g, '\n'); 
+                alert(`Fitur berbagi tidak didukung di browser ini. Anda bisa menyalin teks:\n\n${encodedShareText}\n\nDan unduh gambarnya secara manual.`);
+            }
+        }
+
+        // Share Social Media for custom cards
+        async function shareCustomCardSocial() {
+            console.log('[SHARE] Attempting to share custom card on social media.');
+            const customText = manualAffirmationInput.value;
+
+            const cleanedCustomText = customText.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+            const shareText = `Afirmasi Kustom Saya:\n\n"${cleanedCustomText}"\n\n#AfirmasiSaya #KekuatanPikiran`;
+
+            if (navigator.share) {
+                let downloadableElement = null; 
+                try {
+                    showLoadingOverlay("Mempersiapkan gambar kustom untuk berbagi...");
+
+                    downloadableElement = await createDownloadableElement(
+                        'Afirmasi Kustom Anda', 
+                        manualAffirmationInput.value, 
+                        previewImage.src, 
+                        true 
+                    );
+                    
+                    const canvas = await html2canvas(downloadableElement, {
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: null,
+                        scale: 2,
+                        logging: true,
+                        width: 800,
+                        height: 600 
+                    });
+                    console.log('[SHARE] html2canvas for social share finished.');
+
+                    const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+
+                    await navigator.share({
+                        title: 'Afirmasi Kustom Saya',
+                        text: shareText, 
+                        files: [new File([imageBlob], 'afirmasi_kustom.jpg', { type: 'image/jpeg' })]
+                    });
+                    console.log('[SHARE] Custom card shared successfully via Web Share API.');
+                } catch (error) {
+                    console.error('[SHARE ERROR] Error sharing custom card via Web Share API:', error);
+                    alert('Gagal berbagi kartu kustom ke media sosial. Fitur ini mungkin tidak didukung atau ada masalah dalam membuat gambar. Pastikan gambar latar belakang terlihat jelas di layar dan periksa konsol browser (F12) untuk detail error.');
+                } finally {
+                    if (downloadableElement && downloadableElement.parentNode) {
+                        downloadableElement.parentNode.removeChild(downloadableElement);
+                        console.log('[SHARE] Temporary share element removed.');
+                    }
+                    hideLoadingOverlay(); 
+                }
+            } else {
+                const encodedShareText = encodeURIComponent(shareText).replace(/%0A/g, '\n');
+                alert(`Fitur berbagi tidak didukung di browser ini. Anda bisa mengunduh gambar dan membagikannya secara manual. Teks: \n\n${encodedShareText}`);
+            }
+        }
+
+        // Add event listener for the "Update Custom Card" button
+        createCustomCardBtn.addEventListener('click', () => {
+            updatePreview();
+        });
+
+        // Initial setup for custom card image
+        updateCustomImage();
+
+
+        // Loading Overlay Functions
+        function showLoadingOverlay(message = "Membuat gambar...") {
+            loadingOverlay.querySelector('p').textContent = message;
+            loadingOverlay.style.display = 'flex';
+        }
+
+        function hideLoadingOverlay() {
+            loadingOverlay.style.display = 'none';
+            loadingOverlay.querySelector('p').textContent = "Membuat gambar..."; 
+        }
+
+    </script>
+</body>
+</html>
